@@ -19,7 +19,7 @@ Simon Cao ([scsmncao@berkeley.edu](mailto:scsmncao@berkeley.edu))
 
 ## Demo Video
 
-See [Represent Video] (https://www.youtube.com/watch?v=sLWGrmU-TiA&feature=youtu.be)
+See [Represent Video] (https://www.youtube.com/watch?v=TTv7dreNb2A&feature=youtu.be)
 
 ## Screenshots
 
