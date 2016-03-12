@@ -57,16 +57,16 @@ public class WatchToPhoneService extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
         // Which cat do we want to feed? Grab this info from INTENT
         // which was passed over when we called startService
-        String index = "";
+        String send = "";
 
-        if (intent.hasExtra("row")) {
-            index = intent.getStringExtra("row");
+        if (intent.hasExtra("ids")) {
+            send = "Rep " + intent.getStringExtra("ids");
         }
         else {
-            index = intent.getStringExtra("zipCode");
+            send = "Zip " + intent.getStringExtra("zipCode");
         }
 
-        final String stringToSend = index;
+        final String stringToSend = send;
 
 
 

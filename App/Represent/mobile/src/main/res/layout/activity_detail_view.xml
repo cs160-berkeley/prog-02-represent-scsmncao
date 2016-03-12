@@ -1,4 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:fillViewport="true"
+    android:background="#FFFFFF">
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -63,9 +69,8 @@
         android:layout_height="wrap_content"
         android:id="@+id/linearLayout"
         android:orientation="vertical"
-        android:layout_below="@+id/imageView5"
+        android:layout_below="@+id/textView15"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="10dp"
         android:layout_marginBottom="15dp">
     </LinearLayout>
 
@@ -75,15 +80,40 @@
         android:id="@+id/imageView6"
         android:layout_below="@+id/linearLayout"
         android:layout_centerHorizontal="true"
-        android:src="@drawable/bill" />
+        android:src="@drawable/bill"
+        android:layout_marginBottom="5dp" />
 
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:id="@+id/linearLayout2"
-        android:layout_below="@+id/imageView6"
+        android:layout_below="@+id/textView16"
         android:layout_alignParentStart="true"
-        android:orientation="vertical"
-        android:layout_marginTop="7dp">
+        android:orientation="vertical">
     </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Committees"
+        android:id="@+id/textView15"
+        android:layout_below="@+id/imageView5"
+        android:layout_centerHorizontal="true"
+        android:textSize="10dp"
+        android:textColor="#000000"
+        android:layout_marginBottom="15dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Bills"
+        android:id="@+id/textView16"
+        android:layout_below="@+id/imageView6"
+        android:layout_centerHorizontal="true"
+        android:textSize="10dp"
+        android:textColor="#000000"
+        android:layout_marginBottom="15dp" />
 </RelativeLayout>
+</ScrollView>

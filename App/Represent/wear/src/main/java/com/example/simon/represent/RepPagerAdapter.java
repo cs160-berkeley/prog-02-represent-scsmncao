@@ -13,6 +13,7 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.wearable.view.CardFragment;
 import android.support.wearable.view.FragmentGridPagerAdapter;
 import android.support.wearable.view.GridPagerAdapter;
@@ -25,6 +26,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 
 /**
  * Created by Simon on 3/3/16.
@@ -36,6 +38,10 @@ public class RepPagerAdapter extends FragmentGridPagerAdapter{
     private String information;
     private Page[][] PAGES;
     private String cityName;
+    private String[] names;
+    private String[] ids;
+    private String obama;
+    private String romney;
 
     public RepPagerAdapter(Context ctx, FragmentManager fm, String path) {
         super(fm);
@@ -67,20 +73,43 @@ public class RepPagerAdapter extends FragmentGridPagerAdapter{
     private void createPages() {
         if (information != null) {
             String[] allReps = information.split("/");
-            PAGES = new Page[allReps.length - 1][2];
+            PAGES = new Page[allReps.length - 3][2];
+            names = new String[allReps.length - 3];
+            ids = new String[allReps.length - 3];
             for (int i = 0; i < allReps.length; i++) {
                 String[] currentRep = allReps[i].split(" ");
 
                 //handle cityname
-                if (currentRep.length == 1) {
-                    cityName = currentRep[0];
-                    break;
+                if (Objects.equals(currentRep[0], "City")) {
+                    cityName = "";
+                    for (int j = 1; j < currentRep.length; j++) {
+                        cityName += currentRep[j] + " ";
+                    }
+
                 }
-                String name = currentRep[0] + " " + currentRep[1];
-                String isSenator = currentRep[3];
-                String party = currentRep[2];
-                PAGES[i][0] = new Page(name, isSenator + " | " + party, 0);
-                PAGES[i][1] = new Page("", "", 0);
+                else if (Objects.equals(currentRep[0], "State")) {
+                    cityName += ", " + currentRep[1];
+
+                }
+                else if (Objects.equals(currentRep[0], "Voting")) {
+                    romney = currentRep[1];
+                    obama = currentRep[2];
+                }
+                else {
+                    String name = currentRep[0] + " " + currentRep[1];
+                    names[i] = name;
+                    String isSenator = "";
+                    if (Objects.equals(currentRep[3], "true")) {
+
+                        isSenator = "Senator";
+                    } else {
+                        isSenator = "Rep";
+                    }
+                    String party = currentRep[2];
+                    ids[i] = currentRep[4];
+                    PAGES[i][0] = new Page(name, isSenator + " | " + party, 0);
+                    PAGES[i][1] = new Page("", "", 0);
+                }
             }
         }
         else {
@@ -102,10 +131,10 @@ public class RepPagerAdapter extends FragmentGridPagerAdapter{
         Fragment fragment;
 
         if (col == 0) {
-            fragment = RepFragment.create(title, text);
+            fragment = RepFragment.create(title, text, names, ids);
         }
         else {
-            fragment = VoteFragment.create(cityName);
+            fragment = VoteFragment.create(cityName, obama, romney);
         }
 
         // Advanced settings (card gravity, card expansion/scrolling)
@@ -116,11 +145,9 @@ public class RepPagerAdapter extends FragmentGridPagerAdapter{
         return fragment;
     }
 
-    // Obtain the background image for the row
     @Override
     public Drawable getBackgroundForRow(int row) {
-        return mContext.getResources().getDrawable(
-                (BG_IMAGES[row % BG_IMAGES.length]), null);
+        return mContext.getResources().getDrawable(R.drawable.flag_dark, null);
     }
 
 
@@ -128,7 +155,7 @@ public class RepPagerAdapter extends FragmentGridPagerAdapter{
     @Override
     public Drawable getBackgroundForPage(int row, int column) {
         // Default to background image for row
-        return GridPagerAdapter.BACKGROUND_NONE;
+        return mContext.getResources().getDrawable(R.drawable.flag_dark, null);
     }
 
     // Obtain the number of pages (vertical)

@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import java.io.InputStream;
 import java.util.HashMap;
+import java.util.Objects;
 
 public class detail_view extends AppCompatActivity {
 
@@ -38,14 +39,47 @@ public class detail_view extends AppCompatActivity {
 
         new DownloadImageTask(portrait).execute(data.get("picture"));
         party.setText(data.get("party"));
+        if (Objects.equals(data.get("party"), "Democrat")) {
+            party.setTextColor(Color.parseColor("#311ECC"));
+        }
+        else if (Objects.equals(data.get("party"), "Independent")) {
+            party.setTextColor(Color.parseColor("#000000"));
+        }
+        else {
+            party.setTextColor(Color.parseColor("#cc0000"));
+        }
         name.setText(data.get("isSenator") + " " + data.get("name"));
-        dates.setText(data.get("date"));
+        String[] startEndDates = data.get("date").split("to");
+        String startDate = "";
+        String endDate = "";
+
+        HashMap<String, String> dateHash = new HashMap<String, String>();
+        dateHash.put("01", "Jan");
+        dateHash.put("02", "Feb");
+        dateHash.put("03", "Mar");
+        dateHash.put("04", "Apr");
+        dateHash.put("05", "May");
+        dateHash.put("06", "June");
+        dateHash.put("07", "July");
+        dateHash.put("08", "Aug");
+        dateHash.put("09", "Sept");
+        dateHash.put("10", "Oct");
+        dateHash.put("11", "Nov");
+        dateHash.put("12", "Dec");
+
+        String[] startDateArray = startEndDates[0].split("-");
+        startDate = dateHash.get(startDateArray[1].trim()) + " " + startDateArray[2].trim() + ", " + startDateArray[0].trim();
+        String[] endDateArray = startEndDates[1].split("-");
+        endDate = dateHash.get(endDateArray[1].trim()) + " " + endDateArray[2].trim() + ", " + endDateArray[0].trim();
+
+        dates.setText(startDate + " - " + endDate);
 
         for (int i = 0; i < lists.get("committees").length; i++) {
             TextView currentName = new TextView(this);
             currentName.setText(lists.get("committees")[i]);
             currentName.setGravity(Gravity.CENTER);
             currentName.setTextColor(Color.parseColor("#000000"));
+            currentName.setPadding(0,0,0,10);
             committees.addView(currentName);
         }
 
@@ -61,6 +95,7 @@ public class detail_view extends AppCompatActivity {
             currentDate.setGravity(Gravity.CENTER);
             currentDate.setTextColor(Color.parseColor("#595959"));
             currentDate.setTextSize(TypedValue.COMPLEX_UNIT_PT, 5);
+            currentDate.setPadding(0,0,0,10);
             bills.addView(currentDate);
         }
 

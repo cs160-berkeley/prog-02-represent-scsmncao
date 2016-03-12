@@ -17,19 +17,18 @@ import java.util.Objects;
 public class RepFragment extends Fragment implements View.OnClickListener {
 
 
-    public static RepFragment create(String title, String text) {
+    public static RepFragment create(String title, String text, String[] names, String[] ids) {
         RepFragment fragment = new RepFragment();
         Bundle args = new Bundle();
         args.putString("title", title);
         args.putString("description", text);
         int index = 0;
-        if (Objects.equals(title, "Barbara Boxer")) {
-            index = 1;
+        for (int i = 0; i < names.length; i++) {
+            if (Objects.equals(title, names[i])) {
+                index = i;
+            }
         }
-        if (Objects.equals(title, "Barbara Lee")) {
-            index = 2;
-        }
-        args.putInt("index", index);
+        args.putString("ids", ids[index]);
         fragment.setArguments(args);
         return fragment;
     }
@@ -52,8 +51,8 @@ public class RepFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         Intent sendIntent = new Intent(v.getContext(), WatchToPhoneService.class);
-        sendIntent.putExtra("row", "" + getArguments().getInt("index"));
+        System.out.println(getArguments().getString("ids"));
+        sendIntent.putExtra("ids", getArguments().getString("ids"));
         getActivity().startService(sendIntent);
-
     }
 }

@@ -30,7 +30,7 @@ public class showRepresentatives extends AppCompatActivity {
         setContentView(R.layout.activity_show_representatives);
         Intent intent = getIntent();
         TextView topText = (TextView) findViewById(R.id.textView3);
-        topText.setText(topText.getText() + " " + intent.getStringExtra("postalCode") + " (" + intent.getStringExtra("cityName") + ")");
+        topText.setText(topText.getText() + " " + intent.getStringExtra("postalCode") + " (" + intent.getStringExtra("cityName") + ", " + intent.getStringExtra("state") +  ")");
 
         //list View with adaptors
 
@@ -41,11 +41,14 @@ public class showRepresentatives extends AppCompatActivity {
         String[] parties = intent.getStringArrayExtra("parties");
         String[] emails = intent.getStringArrayExtra("emails");
         String[] websites = intent.getStringArrayExtra("websites");
-        String[] tweets = intent.getStringArrayExtra("tweets");
         String[] dates = intent.getStringArrayExtra("dates");
+        boolean[] isSenator = intent.getBooleanArrayExtra("isSenator");
+        String[] ids = intent.getStringArrayExtra("ids");
+        String sunlightApiKey = intent.getStringExtra("sunlightKey");
+        String[] twitterHandles = intent.getStringArrayExtra("twitterHandles");
 
 
-        final RepArrayAdapter adapter = new RepArrayAdapter(this, pictureLinks, names, parties, emails, websites, tweets, dates, true);
+        final RepArrayAdapter adapter = new RepArrayAdapter(this, pictureLinks, names, parties, emails, websites, dates, isSenator, ids, sunlightApiKey, twitterHandles);
         for (int i = 0; i < 2; i++) {
             View view = adapter.getView(i, null, senatorList);
             senatorList.addView(view);

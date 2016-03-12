@@ -49,8 +49,12 @@ public class PhoneToWatchService extends Service {
         // which was passed over when we called startService
         final String[] names = intent.getStringArrayExtra("names");
         final String[] parties = intent.getStringArrayExtra("parties");
-        final String[] isSenator = intent.getStringArrayExtra("isSenator");
+        final boolean[] isSenator = intent.getBooleanArrayExtra("isSenator");
         final String cityName = intent.getStringExtra("cityName");
+        final String state = intent.getStringExtra("state");
+        final String[] ids = intent.getStringArrayExtra("ids");
+        final String romney = intent.getStringExtra("romney");
+        final String obama = intent.getStringExtra("obama");
 
 
         // Send the message with the cat name
@@ -65,10 +69,13 @@ public class PhoneToWatchService extends Service {
                 for (int i = 0; i < names.length; i++) {
                     stringToSend += names[i]+ " ";
                     stringToSend += parties[i] + " ";
-                    stringToSend += isSenator[i] + "/";
+                    stringToSend += isSenator[i] + " ";
+                    stringToSend += ids[i] + "/";
                 }
 
-                stringToSend += cityName;
+                stringToSend += "City " + cityName + "/";
+                stringToSend += "State " + state + "/";
+                stringToSend += "Voting " + romney + " " + obama;
 
                 sendMessage(stringToSend, "information");
             }

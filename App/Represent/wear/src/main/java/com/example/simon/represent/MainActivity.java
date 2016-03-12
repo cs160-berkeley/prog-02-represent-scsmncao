@@ -18,6 +18,7 @@ import java.util.Random;
 
 public class MainActivity extends WearableActivity {
 
+
     // The following are used for the shake detection
     private SensorManager mSensorManager;
     private Sensor mAccelerometer;
@@ -56,19 +57,13 @@ public class MainActivity extends WearableActivity {
 				 * method you would use to setup whatever you want done once the
 				 * device has been shook.
 				 */
-                Random rand = new Random();
-                int randomZip = rand.nextInt(9001) + 90000;
-                String[] split = information.split("/");
-                split[3] = randomZip + "";
-                String finalString = "";
-                for (int i = 0; i < split.length; i++) {
-                    finalString += split[i] + "/";
-                    System.out.println(finalString);
+                if (count == 1) {
+                    Random rand = new Random();
+                    int randomZip = rand.nextInt(4072);
+                    Intent sendIntent = new Intent(getBaseContext(), WatchToPhoneService.class);
+                    sendIntent.putExtra("zipCode", randomZip + "");
+                    startService(sendIntent);
                 }
-                pager.setAdapter(new RepPagerAdapter(getBaseContext(), getFragmentManager(), finalString));
-                Intent sendIntent = new Intent(getBaseContext(), WatchToPhoneService.class);
-                sendIntent.putExtra("zipCode", randomZip + "");
-                startService(sendIntent);
             }
         });
     }

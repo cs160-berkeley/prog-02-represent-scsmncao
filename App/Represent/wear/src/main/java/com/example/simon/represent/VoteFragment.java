@@ -17,10 +17,12 @@ import java.util.Random;
 public class VoteFragment extends Fragment {
 
 
-    public static VoteFragment create(String name) {
+    public static VoteFragment create(String name, String obama, String romney) {
         VoteFragment fragment = new VoteFragment();
         Bundle args = new Bundle();
         args.putString("city", name);
+        args.putString("obama", obama);
+        args.putString("romney", romney);
         fragment.setArguments(args);
         return fragment;
     }
@@ -35,10 +37,8 @@ public class VoteFragment extends Fragment {
         TextView city = (TextView) view.findViewById(R.id.textView4);
         TextView obamaVote = (TextView) view.findViewById(R.id.textView2);
         TextView romneyVote = (TextView) view.findViewById(R.id.textView3);
-        Random rand = new Random();
-        int percentage = rand.nextInt(101) + 0;
-        obamaVote.setText(percentage + "%");
-        romneyVote.setText((100 - percentage) + "%");
+        obamaVote.setText(getArguments().getString("obama") + "%");
+        romneyVote.setText(getArguments().getString("romney") + "%");
         city.setText(city.getText() + " " + getArguments().getString("city"));
         return view;
     }
